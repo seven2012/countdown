@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta http-equev="X-UA-Compatible" content="ie=edge">
+  <title>JS Bin</title>
+  <link rel="stylesheet" type="text/css" href="./countdown.css">
+</head>
+<body>
+  <h1>Countdown Timer</h1>
+  <div id="timedown">
+    <h3>
+      <p class="num"> 02 </p>      
+      <p class="name">HOURS</p>
+    </h3>
+    <span>:</span>
+    <h3>
+      <p class="num"> 00 </p>
+      <p class="name">MINUTES</p>
+    </h3>
+    <span>:</span>
+    <h3>
+      <p class="num"> 00</p>
+      <p class="name">SECONDS</p>
+    </h3>     
+  </div>
+</div>
+  <button id="btn1">开始</button>
+  <button id="btn2">暂停</button>
+  <button id="btn3">重置</button>
+
+ <script>
+var btnStart = document.querySelector('#btn1')
+var btnPause = document.querySelector('#btn2')
+var btnReset = document.querySelector('#btn3')
+var timeLeft=document.querySelectorAll(".num")
+var total = 2 * 3600
+var timerID = -1
+
+btnStart.addEventListener('click', function(){
+        btnStart.style.display = 'none'
+        btnPause.style.display = 'inline-block'    
+    timerID = setInterval(function(){
+        if(total <= 0){
+        clearInterval(timerID)
+        }
+        total -=1;
+
+        var hour = parseInt(total / 3600,10)
+        var minute = parseInt((total - hour * 3600) / 60)
+        var second = total - hour * 3600 - minute * 60
+        if(second<10){
+        return timeLeft[2].innerHTML=`0${second}`
+        }
+        if(minute<10){
+        return timeLeft[1].innerHTML=`0${minute}`
+        }
+        
+        timeLeft[0].innerHTML=`0${hour}`
+        timeLeft[1].innerHTML=`${minute}`  
+        timeLeft[2].innerHTML=`${second}`
+
+
+        btnPause.addEventListener('click',function(){
+            if(timerID!=-1){
+                clearInterval(timerID)
+            }               
+            btnStart.style.display = 'inline-block'; 
+            btnPause.style.display = 'none';
+            timeLeft[0].innerHTML=`0${hour}`
+            timeLeft[1].innerHTML=`${minute}`  
+            timeLeft[2].innerHTML=`${second}`      
+        })
+        btnReset.addEventListener('click',function(){
+            if(timerID!=-1){
+                clearInterval(timerID)
+            }
+            total = 2 * 3600
+            btnStart.style.display = 'inline-block'; 
+            btnPause.style.display = 'none';
+            timeLeft[0].innerHTML=`02`
+            timeLeft[1].innerHTML=`00`  
+            timeLeft[2].innerHTML=`00`      
+        })       
+    },1000)
+})
+
+ </script> 
+</body>
+</html>
